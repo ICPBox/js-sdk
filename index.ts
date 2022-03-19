@@ -4,12 +4,25 @@ const callbacks = {};
 declare global {
   interface Window {
     ReactNativeWebView: any;
+    __isIcpBoxConnected: boolean;
   }
 }
 
 export default {
   webview: window.ReactNativeWebView,
-  isConnected: function () {},
+  isConnected: function () {
+    return new Promise((resolve, reject) => {
+      this.webview.postMessage(JSON.stringify({ action: "isConnect" }));
+      const listener = function (event) {
+        const status = event.detail;
+        return resolve(status);
+      };
+      window.addEventListener("dapp_connect", listener, {
+        capture: true,
+        once: true,
+      });
+    });
+  },
   authorize: function (opts: {
     canisters: string[];
     host?: string;

@@ -6,14 +6,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <script>
+
+  <script type="module">
+    import icpbox from "./esm/index.js";
     (async function () {
-      // const data = await icpbox.authorize({
-      //   canisters: [
-      //     'quctq-dsfdf-asdfs-dsfds-asd',
-      //     'quctq-dsfdf-asdfs-dsfds-a2d',
-      //   ]
-      // });
+      const connected = await icpbox.isConnected();
+      document.getElementById('status').innerText = connected ? 1 : 0;
+
+      const data = await icpbox.authorize({
+        canisters: [
+          'quctq-dsfdf-asdfs-dsfds-asd',
+          'quctq-dsfdf-asdfs-dsfds-a2d',
+        ]
+      });
+
       document.addEventListener("DOMContentLoaded", async () => {
 
         const data = await icpbox.pay({
@@ -29,6 +35,8 @@
 
 <body>
   <span>123</span>
+  <p id="status">
+  <p>
 </body>
 
 </html>

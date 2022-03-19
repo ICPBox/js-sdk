@@ -8,5 +8,8 @@
     "module": "umd",
     "outDir": "lib",
     "declaration": true
-  }
+  },
+  "include": [
+    "index.ts"
+  ]
 }
