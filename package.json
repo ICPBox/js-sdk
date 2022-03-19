@@ -1,7 +1,7 @@
 {
   "name": "@icpbox/js-sdk",
-  "main": "./lib/index.js",
-  "module": "./index.ts",
+  "main": "./cjs/index.js",
+  "module": "./esm/index.ts",
   "types": "./lib/index.d.ts",
   "version": "1.0.0",
   "scripts": {

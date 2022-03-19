@@ -48,11 +48,11 @@ exports.default = {
                 data: data,
             }));
             var listener = function (event) {
-                var status = event.detail.status;
+                var _a = event.detail, status = _a.status, reason = _a.reason;
                 if (status === "success") {
                     return resolve(event.detail);
                 }
-                return reject("Transfer Failed");
+                return reject(reason);
             };
             window.addEventListener("dapp_pay", listener, {
                 capture: true,

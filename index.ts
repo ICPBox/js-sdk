@@ -66,11 +66,11 @@ export default {
         })
       );
       const listener = function (event) {
-        const { status } = event.detail;
+        const { status, reason } = event.detail;
         if (status === "success") {
           return resolve(event.detail);
         }
-        return reject("Transfer Failed");
+        return reject(reason);
       };
       window.addEventListener("dapp_pay", listener, {
         capture: true,

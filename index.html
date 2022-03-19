@@ -48,11 +48,16 @@
       }
 
       const buy = async function () {
-        const data = await icpbox.pay({
-          amount: '0.01',
-          to: "icpnftfi.icp",
-          memo: "392432"
-        });
+        try {
+          const data = await icpbox.pay({
+            amount: '0.01',
+            to: "icpnftfi.icp",
+            memo: "392432"
+          });
+        } catch (error) {
+          console.log(error);
+        }
+
       }
 
       $('document').ready(function () {
