@@ -53,6 +53,6 @@ await icpbox.authorize({
 await icpbox.buy({
   to: "icpnftfi.icp",
   amount: "2",
-  memo: "[order_id]"
+  memo: "1232" // normally an order number is supplied
 });
 ```
