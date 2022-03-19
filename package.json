@@ -1,0 +1,17 @@
+{
+  "name": "@icpbox/js-sdk",
+  "main": "./lib/index.js",
+  "module": "./index.ts",
+  "types": "./lib/index.d.ts",
+  "version": "1.0.0",
+  "scripts": {
+    "compile": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.2"
+  },
+  "publishConfig": {
+    "@icpbox:registry": "https://npm.pkg.github.com"
+  },
+  "license": "MIT"
+}
