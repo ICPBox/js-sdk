@@ -8,7 +8,8 @@ Click the top search input
 
 For example, "https://app-testnet.icnaming.com/"
 
-![Simulator Screen Shot - iPhone 13 - 2022-03-20 at 22 07 39](https://user-images.githubusercontent.com/96564381/159166455-03a74c4b-8b40-45c1-a31a-2b511fd15cf1.png)
+<img width="397" alt="2022-03-20 22 10 53" src="https://user-images.githubusercontent.com/96564381/159166595-fcd221ff-0824-429d-92f6-b2db8c4cc791.png">
+
 
 Then, click the 'To dapp ...' link below, you should be able to test your code according to your sdk instructions below:
 
