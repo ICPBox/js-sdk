@@ -38,13 +38,19 @@
         document.getElementById('status-connect').innerText = connected ? 'connectd' : 'not connected';
       };
 
+
       const auth = async function () {
-        const data = await icpbox.authorize({
-          canisters: [
-            'quctq-dsfdf-asdfs-dsfds-asd',
-            'quctq-dsfdf-asdfs-dsfds-a2d',
-          ]
-        });
+        try {
+          const data = await icpbox.authorize({
+            canisters: [
+              'quctq-dsfdf-asdfs-dsfds-asd',
+              'quctq-dsfdf-asdfs-dsfds-a2d',
+            ]
+          });
+          console.log("auth ok: ", data);
+        } catch (error) {
+          console.log('error: ', error);
+        }
       }
 
       const buy = async function () {

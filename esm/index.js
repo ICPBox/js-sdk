@@ -4,6 +4,9 @@ export default {
     get webview() {
         return window.ReactNativeWebView;
     },
+    check: function () {
+        return "ReactNativeWebView" in window;
+    },
     isConnected: function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
@@ -31,7 +34,7 @@ export default {
                 }
                 return reject("Auth Failed");
             };
-            window.addEventListener("dapp_auth", listener, {
+            window.addEventListener("dappauth", listener, {
                 capture: true,
                 once: true,
             });

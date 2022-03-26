@@ -46,7 +46,7 @@ export default {
         }
         return reject("Auth Failed");
       };
-      window.addEventListener("dapp_auth", listener, {
+      window.addEventListener("dappauth", listener, {
         capture: true,
         once: true,
       });
