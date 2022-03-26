@@ -12,6 +12,9 @@ export default {
   get webview() {
     return window.ReactNativeWebView;
   },
+  check: function () {
+    return "ReactNativeWebView" in window;
+  },
   isConnected: function () {
     return new Promise((resolve, reject) => {
       this.webview.postMessage(JSON.stringify({ action: "isConnect" }));
