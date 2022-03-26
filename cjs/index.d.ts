@@ -5,7 +5,7 @@ declare global {
     }
 }
 declare const _default: {
-    webview: any;
+    readonly webview: any;
     isConnected: () => Promise<unknown>;
     authorize: (opts: {
         canisters: string[];

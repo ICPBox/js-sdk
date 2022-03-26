@@ -9,7 +9,9 @@ declare global {
 }
 
 export default {
-  webview: window.ReactNativeWebView,
+  get webview() {
+    return window.ReactNativeWebView;
+  },
   isConnected: function () {
     return new Promise((resolve, reject) => {
       this.webview.postMessage(JSON.stringify({ action: "isConnect" }));

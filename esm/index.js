@@ -1,7 +1,9 @@
 var __callback_index = 1;
 var callbacks = {};
 export default {
-    webview: window.ReactNativeWebView,
+    get webview() {
+        return window.ReactNativeWebView;
+    },
     isConnected: function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
