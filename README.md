@@ -16,6 +16,15 @@ npm install @icpbox/js-sdk
 import icpbox from "@icpbox/js-sdk";
 ```
 
+
+### check env
+
+
+
+```
+icpbox.check();
+```
+
 ### check if dapp is connected
 
 ```js
@@ -55,4 +64,10 @@ await icpbox.buy({
   amount: "2",
   memo: "1232" // normally an order number is supplied
 });
+```
+
+### disconnect dapp
+
+```
+icpbox.disConnect();
 ```
