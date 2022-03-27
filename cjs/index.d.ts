@@ -21,5 +21,9 @@ declare const _default: {
         memo?: string;
         fee?: string;
     }) => Promise<unknown>;
+    /**
+     * dis connect wallet
+     */
+    disConnect(): Promise<unknown>;
 };
 export default _default;
