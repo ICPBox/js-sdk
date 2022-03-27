@@ -83,4 +83,15 @@ export default {
       });
     });
   },
+  /**
+   * dis connect wallet
+   */
+  disConnect() {
+    return new Promise((resolve, _) => {
+      this.webview.postMessage(
+        JSON.stringify({ action: "disConnect", data: location.host })
+      );
+      resolve(true);
+    });
+  },
 };
