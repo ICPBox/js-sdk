@@ -18,7 +18,7 @@ jobs:
           fetch-depth: 1    # Fetch all history for .GitInfo and .Lastmod
 
       - name: Build
-        run: yarn install && yarn build
+        run: yarn install && yarn build --base /js-sdk/
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
