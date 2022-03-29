@@ -1,76 +1,52 @@
-var __callback_index = 1;
-var callbacks = {};
+import { getArgTypes } from "./src/sign";
+import proxy from "./src/proxy";
+import { createAgent, createActor } from "./src/agent";
+import { Buffer } from "buffer/";
+// @ts-ignore
+window.Buffer = window.Buffer || Buffer;
+let agent;
+let publicKey;
+const idls = [];
 export default {
     get webview() {
         return window.ReactNativeWebView;
+    },
+    get publicKey() {
+        return publicKey;
+    },
+    setPublickKey(val) {
+        publicKey = val;
     },
     check: function () {
         return "ReactNativeWebView" in window;
     },
     isConnected: function () {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            _this.webview.postMessage(JSON.stringify({ action: "isConnect" }));
-            var listener = function (event) {
-                var status = event.detail;
-                return resolve(status);
-            };
-            window.addEventListener("dapp_connect", listener, {
-                capture: true,
-                once: true,
-            });
-        });
+        return proxy("isConnected", {});
     },
     authorize: function (opts) {
-        var _this = this;
         opts.host = location.host;
         opts.icon = opts.icon || location.origin + "/favicon.ico";
-        return new Promise(function (resolve, reject) {
-            _this.webview.postMessage(JSON.stringify({ action: "authorize", data: opts }));
-            var listener = function (event) {
-                var status = event.detail.status;
-                if (status === "success") {
-                    return resolve(event.detail);
-                }
-                return reject("Auth Failed");
-            };
-            window.addEventListener("dappauth", listener, {
-                capture: true,
-                once: true,
-            });
-        });
+        return proxy("authorize", opts);
     },
     pay: function (data) {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            data.host = data.host || location.host;
-            data.icon = data.icon || location.origin + "/favicon.ico";
-            data.fee = data.fee || "10000";
-            _this.webview.postMessage(JSON.stringify({
-                action: "pay",
-                data: data,
-            }));
-            var listener = function (event) {
-                var _a = event.detail, status = _a.status, reason = _a.reason;
-                if (status === "success") {
-                    return resolve(event.detail);
-                }
-                return reject(reason);
-            };
-            window.addEventListener("dapp_pay", listener, {
-                capture: true,
-                once: true,
-            });
-        });
+        data.host = data.host || location.host;
+        data.icon = data.icon || location.origin + "/favicon.ico";
+        data.fee = data.fee || "10000";
+        return proxy("pay", data);
+    },
+    async createActor({ canisterId, interfaceFactory }) {
+        idls[canisterId] = getArgTypes(interfaceFactory);
+        if (!agent) {
+            agent = await createAgent(publicKey, {
+                whitelist: [canisterId],
+            }, idls);
+        }
+        return createActor(agent, canisterId, interfaceFactory);
     },
     /**
      * dis connect wallet
      */
-    disConnect: function () {
-        var _this = this;
-        return new Promise(function (resolve, _) {
-            _this.webview.postMessage(JSON.stringify({ action: "disConnect", data: location.host }));
-            resolve(true);
-        });
+    disConnect() {
+        return proxy("disConnect", { host: location.host });
     },
 };

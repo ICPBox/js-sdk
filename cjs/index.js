@@ -1,78 +1,57 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var __callback_index = 1;
-var callbacks = {};
+const sign_1 = require("./src/sign");
+const proxy_1 = __importDefault(require("./src/proxy"));
+const agent_1 = require("./src/agent");
+const buffer_1 = require("buffer/");
+// @ts-ignore
+window.Buffer = window.Buffer || buffer_1.Buffer;
+let agent;
+let publicKey;
+const idls = [];
 exports.default = {
     get webview() {
         return window.ReactNativeWebView;
+    },
+    get publicKey() {
+        return publicKey;
+    },
+    setPublickKey(val) {
+        publicKey = val;
     },
     check: function () {
         return "ReactNativeWebView" in window;
     },
     isConnected: function () {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            _this.webview.postMessage(JSON.stringify({ action: "isConnect" }));
-            var listener = function (event) {
-                var status = event.detail;
-                return resolve(status);
-            };
-            window.addEventListener("dapp_connect", listener, {
-                capture: true,
-                once: true,
-            });
-        });
+        return (0, proxy_1.default)("isConnected", {});
     },
     authorize: function (opts) {
-        var _this = this;
         opts.host = location.host;
         opts.icon = opts.icon || location.origin + "/favicon.ico";
-        return new Promise(function (resolve, reject) {
-            _this.webview.postMessage(JSON.stringify({ action: "authorize", data: opts }));
-            var listener = function (event) {
-                var status = event.detail.status;
-                if (status === "success") {
-                    return resolve(event.detail);
-                }
-                return reject("Auth Failed");
-            };
-            window.addEventListener("dappauth", listener, {
-                capture: true,
-                once: true,
-            });
-        });
+        return (0, proxy_1.default)("authorize", opts);
     },
     pay: function (data) {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            data.host = data.host || location.host;
-            data.icon = data.icon || location.origin + "/favicon.ico";
-            data.fee = data.fee || "10000";
-            _this.webview.postMessage(JSON.stringify({
-                action: "pay",
-                data: data,
-            }));
-            var listener = function (event) {
-                var _a = event.detail, status = _a.status, reason = _a.reason;
-                if (status === "success") {
-                    return resolve(event.detail);
-                }
-                return reject(reason);
-            };
-            window.addEventListener("dapp_pay", listener, {
-                capture: true,
-                once: true,
-            });
-        });
+        data.host = data.host || location.host;
+        data.icon = data.icon || location.origin + "/favicon.ico";
+        data.fee = data.fee || "10000";
+        return (0, proxy_1.default)("pay", data);
+    },
+    async createActor({ canisterId, interfaceFactory }) {
+        idls[canisterId] = (0, sign_1.getArgTypes)(interfaceFactory);
+        if (!agent) {
+            agent = await (0, agent_1.createAgent)(publicKey, {
+                whitelist: [canisterId],
+            }, idls);
+        }
+        return (0, agent_1.createActor)(agent, canisterId, interfaceFactory);
     },
     /**
      * dis connect wallet
      */
-    disConnect: function () {
-        var _this = this;
-        return new Promise(function (resolve, _) {
-            _this.webview.postMessage(JSON.stringify({ action: "disConnect", data: location.host }));
-            resolve(true);
-        });
+    disConnect() {
+        return (0, proxy_1.default)("disConnect", { host: location.host });
     },
 };
