@@ -4,7 +4,7 @@ import { IC_MAINNET_URLS } from "./constants";
 import { WalletIdentity } from "./identity";
 import { signFactory } from "./sign";
 import PublicKey from "./publicKey";
-import { blobFromHex } from "@dfinity/candid";
+import { blobFromHex } from "./types";
 
 export interface CreateAgentParams {
   whitelist?: string[];
