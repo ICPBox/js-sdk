@@ -1,5 +1,5 @@
 import { PublicKey } from "@dfinity/agent";
-import { BinaryBlob, DerEncodedBlob } from "@dfinity/candid";
+import { BinaryBlob, DerEncodedBlob } from "./types";
 declare class Secp256k1PublicKey implements PublicKey {
     static fromRaw(rawKey: BinaryBlob): Secp256k1PublicKey;
     static fromDer(derKey: BinaryBlob | DerEncodedBlob): Secp256k1PublicKey;

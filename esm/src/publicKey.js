@@ -1,4 +1,4 @@
-import { blobFromUint8Array, derBlobFromBlob, } from "@dfinity/candid";
+import { blobFromUint8Array, derBlobFromBlob, } from "./types";
 // This implementation is adjusted from the Ed25519PublicKey.
 // The RAW_KEY_LENGTH and DER_PREFIX are modified accordingly
 class Secp256k1PublicKey {

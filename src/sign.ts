@@ -1,4 +1,4 @@
-import { IDL, JsonValue, BinaryBlob } from "@dfinity/candid";
+import { IDL, JsonValue } from "@dfinity/candid";
 import { Buffer } from "buffer/";
 import { recursiveParseBigint } from "./bigint";
 import proxy from "./proxy";

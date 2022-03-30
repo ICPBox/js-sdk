@@ -26,11 +26,5 @@ class WalletIdentity extends agent_1.SignIdentity {
         });
         return res;
     }
-    getPrincipal() {
-        if (!this._principal) {
-            this._principal = principal_1.Principal.selfAuthenticating(this.publicKey.toDer());
-        }
-        return this._principal;
-    }
 }
 exports.WalletIdentity = WalletIdentity;

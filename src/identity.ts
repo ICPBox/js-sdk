@@ -4,10 +4,10 @@ import {
   ReadRequest,
   CallRequest,
 } from "@dfinity/agent";
-import { BinaryBlob, JsonValue } from "@dfinity/candid";
+import { JsonValue } from "@dfinity/candid";
 import { Principal } from "@dfinity/principal";
 import { Buffer } from "buffer/";
-
+import { BinaryBlob } from "./types";
 export interface SignInfo {
   methodName?: string;
   requestType?: string;
@@ -56,12 +56,5 @@ export class WalletIdentity extends SignIdentity {
       manual: false,
     });
     return res as BinaryBlob;
-  }
-
-  getPrincipal(): Principal {
-    if (!this._principal) {
-      this._principal = Principal.selfAuthenticating(this.publicKey.toDer());
-    }
-    return this._principal;
   }
 }

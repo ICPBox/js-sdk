@@ -23,10 +23,4 @@ export class WalletIdentity extends SignIdentity {
         });
         return res;
     }
-    getPrincipal() {
-        if (!this._principal) {
-            this._principal = Principal.selfAuthenticating(this.publicKey.toDer());
-        }
-        return this._principal;
-    }
 }

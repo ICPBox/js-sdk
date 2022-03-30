@@ -1,7 +1,7 @@
 import { SignIdentity, PublicKey, ReadRequest, CallRequest } from "@dfinity/agent";
-import { BinaryBlob, JsonValue } from "@dfinity/candid";
-import { Principal } from "@dfinity/principal";
+import { JsonValue } from "@dfinity/candid";
 import { Buffer } from "buffer/";
+import { BinaryBlob } from "./types";
 export interface SignInfo {
     methodName?: string;
     requestType?: string;
@@ -20,6 +20,5 @@ export declare class WalletIdentity extends SignIdentity {
     constructor(publicKey: PublicKey, signCb: SignCb, whitelist: string[]);
     getPublicKey(): PublicKey;
     sign(blob: BinaryBlob, signInfo?: RequestType): Promise<BinaryBlob>;
-    getPrincipal(): Principal;
 }
 export {};

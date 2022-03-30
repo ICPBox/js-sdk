@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const candid_1 = require("@dfinity/candid");
+const types_1 = require("./types");
 // This implementation is adjusted from the Ed25519PublicKey.
 // The RAW_KEY_LENGTH and DER_PREFIX are modified accordingly
 class Secp256k1PublicKey {
@@ -28,7 +28,7 @@ class Secp256k1PublicKey {
             ...Secp256k1PublicKey.DER_PREFIX,
             ...new Uint8Array(publicKey),
         ]);
-        return (0, candid_1.derBlobFromBlob)((0, candid_1.blobFromUint8Array)(derPublicKey));
+        return (0, types_1.derBlobFromBlob)((0, types_1.blobFromUint8Array)(derPublicKey));
     }
     static derDecode(key) {
         const expectedLength = Secp256k1PublicKey.DER_PREFIX.length + Secp256k1PublicKey.RAW_KEY_LENGTH;
@@ -36,7 +36,7 @@ class Secp256k1PublicKey {
             const bl = key.byteLength;
             throw new TypeError(`secp256k1 DER-encoded public key must be ${expectedLength} bytes long (is ${bl})`);
         }
-        const rawKey = (0, candid_1.blobFromUint8Array)(key.subarray(Secp256k1PublicKey.DER_PREFIX.length));
+        const rawKey = (0, types_1.blobFromUint8Array)(key.subarray(Secp256k1PublicKey.DER_PREFIX.length));
         if (!this.derEncode(rawKey).equals(key)) {
             throw new TypeError("secp256k1 DER-encoded public key is invalid. A valid secp256k1 DER-encoded public key " +
                 `must have the following prefix: ${Secp256k1PublicKey.DER_PREFIX}`);
