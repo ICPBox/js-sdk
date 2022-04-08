@@ -43,7 +43,6 @@ const isChecked = icpbox.isconnected();
 ```js
 await icpbox.authorize({
   canisters: [
-    ['canister_id', 'name', 'icon'],
     'canister_id'
   ]
 }); 
