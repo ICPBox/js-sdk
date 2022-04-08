@@ -52,12 +52,7 @@ const decodeArgs = (signInfo: SignInfo, argsTypes: ArgsTypesOfCanister) => {
   }
 };
 
-const getDomainMetadata = () => {
-  return {
-    name: "",
-    host: location.host,
-  };
-};
+const decoder = new TextDecoder();
 
 export const signFactory =
   (
@@ -67,10 +62,9 @@ export const signFactory =
   ) =>
   async (payload: ArrayBuffer, signInfo?: SignInfo): Promise<ArrayBuffer> => {
     const payloadArr = new Uint8Array(payload);
-
     if (signInfo)
       signInfo.decodedArguments = signInfo.arguments
-        ? recursiveParseBigint(decodeArgs(signInfo, argsTypes))
+        ? decodeArgs(signInfo, argsTypes)
         : [];
 
     const res: {
@@ -79,7 +73,11 @@ export const signFactory =
     } = await proxy("requestSign", [
       payloadArr,
       metadata,
-      { ...signInfo, preApprove },
+      {
+        ...signInfo,
+        arguments: decoder.decode(signInfo.arguments),
+        preApprove,
+      },
     ] as any);
 
     return res.result.data;
