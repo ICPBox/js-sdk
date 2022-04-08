@@ -39,8 +39,9 @@ export default {
   check: function () {
     return "ReactNativeWebView" in window;
   },
-  isConnected: function () {
-    return proxy("isConnected", {});
+  isConnected: async function () {
+    const res = await proxy("isConnected", {});
+    return res.result;
   },
   authorize: function (opts: {
     canisters: string[];

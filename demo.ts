@@ -77,5 +77,9 @@ import icpbox from "./index";
     $("#auth").on("click", auth);
     $("#buy").on("click", buy);
     $("#call-canister").on("click", callUpdate);
+    $("#disconnect").on("click", async function () {
+      await icpbox.disConnect();
+      console.log("disconnected");
+    });
   });
 })();
