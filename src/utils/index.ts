@@ -3,7 +3,7 @@ import {
   blobFromUint8Array,
   blobFromBuffer,
   lebEncode,
-} from "./types";
+} from "../types";
 
 import { Buffer } from "buffer/";
 import { sha256 as jsSha256 } from "js-sha256";

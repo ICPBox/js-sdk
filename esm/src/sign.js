@@ -1,5 +1,4 @@
 import { IDL } from "@dfinity/candid";
-import { recursiveParseBigint } from "./bigint";
 import proxy from "./proxy";
 export const canDecodeArgs = (signInfo, argsTypes) => {
     var _a;
@@ -15,22 +14,17 @@ const decodeArgs = (signInfo, argsTypes) => {
         return IDL.decode(funArgumentsTypes, assuredSignInfo.arguments);
     }
 };
-const getDomainMetadata = () => {
-    return {
-        name: "",
-        host: location.host,
-    };
-};
+const decoder = new TextDecoder();
 export const signFactory = (argsTypes, metadata, preApprove = false) => async (payload, signInfo) => {
     const payloadArr = new Uint8Array(payload);
     if (signInfo)
         signInfo.decodedArguments = signInfo.arguments
-            ? recursiveParseBigint(decodeArgs(signInfo, argsTypes))
+            ? decodeArgs(signInfo, argsTypes)
             : [];
     const res = await proxy("requestSign", [
         payloadArr,
         metadata,
-        Object.assign(Object.assign({}, signInfo), { preApprove }),
+        Object.assign(Object.assign({}, signInfo), { arguments: decoder.decode(signInfo === null || signInfo === void 0 ? void 0 : signInfo.arguments), preApprove }),
     ]);
     return res.result.data;
 };

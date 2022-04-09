@@ -63,52 +63,6 @@ export class WalletIdentity extends SignIdentity {
     return res as BinaryBlob;
   }
 
-  /**
-   * Transform a request into a signed version of the request. This is done last
-   * after the transforms on the body of a request. The returned object can be
-   * anything, but must be serializable to CBOR.
-   * @param request - internet computer request to transform
-   */
-  // public async transformRequest(request: HttpAgentRequest): Promise<unknown> {
-  //   const { body, ...fields } = request;
-
-  //   const canister =
-  //     body?.canister_id instanceof Principal
-  //       ? body?.canister_id
-  //       : Principal.fromUint8Array(body?.canister_id?._arr);
-
-  //   if (
-  //     body.request_type !== "read_state" &&
-  //     !this.whitelist.some((id) => id === canister.toString())
-  //   ) {
-  //     throw new Error(
-  //       `Request failed:\n` +
-  //         `  Code: 401\n` +
-  //         `  Body: Identity is not allowed to make requests to canister Id ${canister.toString()}`
-  //     );
-  //   }
-
-  //   const requestId = await requestIdOf(body);
-  //   const sender_sig = await this.sign(
-  //     blobFromBuffer(Buffer.concat([domainSeparator, requestId])),
-  //     body
-  //   );
-
-  //   const transformedResponse = {
-  //     ...fields,
-  //     body: {
-  //       content: body,
-  //       sender_pubkey: this.getPublicKey().toDer(),
-  //       sender_sig,
-  //     },
-  //   };
-  //   return transformedResponse;
-  // }
-  // public async transformRequest(request: HttpAgentRequest): Promise<unknown> {
-  //   console.log("request: ", request);
-  //   return super.transformRequest(request);
-  // }
-
   public async transformRequest(request: HttpAgentRequest): Promise<unknown> {
     const { body, ...fields } = request;
     const requestId = await requestIdOf(body);

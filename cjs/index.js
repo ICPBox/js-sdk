@@ -25,8 +25,9 @@ exports.default = {
     check: function () {
         return "ReactNativeWebView" in window;
     },
-    isConnected: function () {
-        return (0, proxy_1.default)("isConnected", {});
+    isConnected: async function () {
+        const res = await (0, proxy_1.default)("isConnected", {});
+        return res.result;
     },
     authorize: function (opts) {
         opts.host = location.host;

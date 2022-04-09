@@ -75,7 +75,7 @@ export const signFactory =
       metadata,
       {
         ...signInfo,
-        arguments: decoder.decode(signInfo.arguments),
+        arguments: decoder.decode(signInfo?.arguments),
         preApprove,
       },
     ] as any);

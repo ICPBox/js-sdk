@@ -2,10 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 let _callback_index = 1;
 const callbacks = {};
-function default_1(method, payload) {
+function default_1(method, payload, info) {
     const wv = window.ReactNativeWebView;
     return new Promise((resolve, reject) => {
-        wv.postMessage(JSON.stringify({ action: method, data: payload, _cb: _callback_index }));
+        wv.postMessage(JSON.stringify({
+            action: method,
+            data: payload,
+            _cb: _callback_index,
+            info,
+        }));
         const listener = function (event) {
             const { status } = event.detail;
             if (status === "success") {

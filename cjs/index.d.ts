@@ -17,10 +17,7 @@ declare const _default: {
     readonly publicKey: any;
     setPublickKey(val: any): void;
     check: () => boolean;
-    isConnected: () => Promise<{
-        result: any;
-        status: string;
-    }>;
+    isConnected: () => Promise<any>;
     authorize: (opts: {
         canisters: string[];
         host?: string;

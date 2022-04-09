@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getArgTypes = exports.signFactory = exports.canDecodeArgs = void 0;
 const candid_1 = require("@dfinity/candid");
-const bigint_1 = require("./bigint");
 const proxy_1 = __importDefault(require("./proxy"));
 const canDecodeArgs = (signInfo, argsTypes) => {
     var _a;
@@ -22,22 +21,17 @@ const decodeArgs = (signInfo, argsTypes) => {
         return candid_1.IDL.decode(funArgumentsTypes, assuredSignInfo.arguments);
     }
 };
-const getDomainMetadata = () => {
-    return {
-        name: "",
-        host: location.host,
-    };
-};
+const decoder = new TextDecoder();
 const signFactory = (argsTypes, metadata, preApprove = false) => async (payload, signInfo) => {
     const payloadArr = new Uint8Array(payload);
     if (signInfo)
         signInfo.decodedArguments = signInfo.arguments
-            ? (0, bigint_1.recursiveParseBigint)(decodeArgs(signInfo, argsTypes))
+            ? decodeArgs(signInfo, argsTypes)
             : [];
     const res = await (0, proxy_1.default)("requestSign", [
         payloadArr,
         metadata,
-        Object.assign(Object.assign({}, signInfo), { preApprove }),
+        Object.assign(Object.assign({}, signInfo), { arguments: decoder.decode(signInfo === null || signInfo === void 0 ? void 0 : signInfo.arguments), preApprove }),
     ]);
     return res.result.data;
 };
