@@ -14,8 +14,9 @@ declare global {
   }
 }
 
+const cacheKey = "icpbox:publicKey";
 let agent;
-let publicKey;
+let publicKey = localStorage.getItem(cacheKey);
 const idls = [];
 
 type PayType = {
@@ -34,11 +35,14 @@ export default {
   get publicKey() {
     return publicKey;
   },
-  setPublickKey(val) {
+  setPublickKey(val: string) {
     publicKey = val;
+    localStorage.setItem(cacheKey, val);
   },
   check: function () {
-    return "ReactNativeWebView" in window;
+    return (
+      "ReactNativeWebView" in window && navigator.userAgent.match("ICPBox/")
+    );
   },
   isConnected: async function () {
     const res = await proxy("isConnected", {});
