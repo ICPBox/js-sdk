@@ -1,11 +1,11 @@
 let _callback_index = 1;
 const callbacks = {};
 
-export default function (
+export default function <T extends {}>(
   method: string,
   payload: Record<string, string | number | string[]>,
   info?: any
-): Promise<{ result: any; status: string }> {
+): Promise<{ result: any; status: string } & T> {
   const wv = window.ReactNativeWebView;
 
   return new Promise((resolve, reject) => {

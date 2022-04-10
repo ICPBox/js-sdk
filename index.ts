@@ -1,6 +1,7 @@
 import { getArgTypes } from "./src/sign";
 import proxy from "./src/proxy";
 import { createAgent, createActor } from "./src/agent";
+import { ActorSubclass } from "@dfinity/agent";
 
 import { Buffer } from "buffer/";
 // @ts-ignore
@@ -43,14 +44,17 @@ export default {
     const res = await proxy("isConnected", {});
     return res.result;
   },
-  authorize: function (opts: {
+  authorize: async function (opts: {
     canisters: string[];
     host?: string;
     icon?: string;
   }) {
     opts.host = location.host;
     opts.icon = opts.icon || location.origin + "/favicon.ico";
-    return proxy("authorize", opts);
+    const res = await proxy<{ publicKey: string }>("authorize", opts);
+
+    this.setPublickKey(res.publicKey);
+    return res;
   },
   pay: function (data: PayType) {
     data.host = data.host || location.host;
@@ -60,7 +64,10 @@ export default {
     return proxy("pay", data);
   },
 
-  async createActor({ canisterId, interfaceFactory }) {
+  async createActor<T>({
+    canisterId,
+    interfaceFactory,
+  }): Promise<ActorSubclass<T>> {
     idls[canisterId] = getArgTypes(interfaceFactory);
     if (!agent) {
       agent = await createAgent(
@@ -72,7 +79,7 @@ export default {
       );
     }
 
-    return createActor(agent, canisterId, interfaceFactory);
+    return createActor<ActorSubclass<T>>(agent, canisterId, interfaceFactory);
   },
   /**
    * dis connect wallet

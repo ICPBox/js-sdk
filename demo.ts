@@ -1,6 +1,7 @@
 //@ts-nocheck
 window.global = window;
 import icpbox from "./index";
+import ic from "./examples/ic";
 (async function () {
   const check = async function () {
     const connected = await icpbox.isConnected();
@@ -17,7 +18,6 @@ import icpbox from "./index";
           "quctq-dsfdf-asdfs-dsfds-a2d",
         ],
       });
-      icpbox.setPublickKey(data.publicKey);
       console.log("auth ok: ", data, icpbox.publicKey);
     } catch (error) {
       console.log("error: ", error);
@@ -58,6 +58,8 @@ import icpbox from "./index";
     } catch (error) {
       console.log("error: ", error);
     }
+
+    await ic();
   };
 
   const buy = async function () {
