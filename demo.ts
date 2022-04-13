@@ -69,6 +69,7 @@ import ic from "./examples/ic";
         to: "icpnftfi.icp",
         memo: "392432",
       });
+      console.log("pay: ", data);
     } catch (error) {
       console.log(error);
     }

@@ -64,7 +64,7 @@ export const signFactory =
     const payloadArr = new Uint8Array(payload);
     if (signInfo)
       signInfo.decodedArguments = signInfo.arguments
-        ? decodeArgs(signInfo, argsTypes)
+        ? recursiveParseBigint(decodeArgs(signInfo, argsTypes))
         : [];
 
     const res: {

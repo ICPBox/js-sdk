@@ -1,3 +1,4 @@
+import JsonBigInt from "json-bigint";
 import {
   BinaryBlob,
   blobFromUint8Array,
@@ -112,3 +113,7 @@ export function requestIdOf(request: Record<string, any>): RequestId {
   const requestId = hash(concatenated) as RequestId;
   return requestId;
 }
+
+// eslint-disable-next-line
+export const recursiveParseBigint = (obj) =>
+  JsonBigInt.parse(JsonBigInt.stringify(obj));

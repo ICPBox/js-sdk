@@ -9,8 +9,7 @@ import {
 import { JsonValue } from "@dfinity/candid";
 import { Principal } from "@dfinity/principal";
 import { Buffer } from "buffer/";
-import { BinaryBlob, blobFromBuffer } from "./types";
-// import { requestIdOf } from "./utils";
+import { BinaryBlob } from "./types";
 import { concat } from "./utils/buffer";
 export interface SignInfo {
   methodName?: string;
