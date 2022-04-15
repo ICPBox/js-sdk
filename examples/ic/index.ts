@@ -20,5 +20,7 @@ export default async () => {
     { LenGte: 7 }
   );
 
-  console.log("quota: ", quota);
+  const table = await actor.get_price_table();
+
+  console.log("quota: ", quota, table);
 };
